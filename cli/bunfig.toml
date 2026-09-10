@@ -1,0 +1,8 @@
+[run]
+preload = ["./src/stubs/bun-bundle-preload.ts"]
+
+[build]
+react.compiler = false
+
+[resolve]
+"react/compiler-runtime" = "./src/stubs/react-compiler-runtime.ts"

@@ -1,0 +1,226 @@
+/**
+ * 应用布局样式（顶栏 / 点数徽标 / 用户菜单）
+ */
+
+.app-layout {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ---------- 顶栏 ---------- */
+
+.app-header {
+  flex: none;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  padding: 0 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  backdrop-filter: blur(12px);
+}
+
+.app-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.app-header__logo-img {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  object-fit: contain;
+}
+
+.app-header__logo {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.app-header__capsule {
+  padding: 2px 10px;
+  font-size: 11px;
+  color: var(--cyan);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(58, 224, 216, 0.08);
+}
+
+.app-header__nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.app-header__nav-link {
+  padding: 4px 12px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.app-header__nav-link:hover {
+  color: var(--text);
+}
+
+.app-header__nav-link.active {
+  color: var(--text);
+  background: rgba(77, 166, 255, 0.12);
+}
+
+.app-header__nav-link--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.app-header__right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ---------- 点数徽标 ---------- */
+
+.points-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  font-size: 12px;
+  color: var(--cyan);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(58, 224, 216, 0.06);
+  cursor: default;
+  white-space: nowrap;
+}
+
+/* ---------- 用户头像菜单（hover 展开，参考：docs/用户头像菜单-UI样式参考.md） ---------- */
+
+.user-menu {
+  position: relative;
+}
+
+.user-menu-trigger {
+  width: 34px;
+  height: 34px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 50%;
+  padding: 0;
+  background: none;
+  transition: border-color 0.2s;
+}
+
+.user-menu:hover .user-menu-trigger {
+  border-color: var(--primary);
+}
+
+.header-avatar {
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+
+.user-menu-panel {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 240px;
+  background: rgba(15, 25, 48, 0.95);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  z-index: 200;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
+}
+
+/* 悬停桥：填平头像与面板之间间隙，避免快速移动时闪烁 */
+.user-menu-panel::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 0;
+  right: 0;
+  height: 8px;
+}
+
+.user-menu:hover .user-menu-panel {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.user-menu-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.user-menu-row {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 3px 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.user-menu-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 10px 0;
+}
+
+.user-menu-item {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: none;
+  background: transparent;
+  color: var(--text);
+  font-size: 14px;
+  text-align: left;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background-color 0.15s;
+}
+
+.user-menu-item:hover {
+  background: rgba(77, 166, 255, 0.1);
+}
+
+/* ---------- 主工作区 ---------- */
+
+.app-main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}

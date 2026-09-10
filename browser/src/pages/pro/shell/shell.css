@@ -1,0 +1,813 @@
+/**
+ * 专业场景统一 UI 壳样式（pro-shell__ 前缀）
+ *
+ * 布局骨架 / 左工作栏与收起细条 / Agent 面板 / 视图控件（底图菜单、
+ * 2D/3D 切换、仿真时钟角标）/ 详情面板 / 场景管理浮框 / 时间控制 /
+ * 底部状态栏。场景业务样式仍放各场景自己的 css（orbit-/gnc- 前缀）。
+ */
+
+/* ---------- 布局骨架 ---------- */
+
+.pro-shell {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.pro-shell__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.pro-shell__content-row {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.pro-shell__body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+/* 分屏模式：主视图 75% + 展开面板 25% */
+.pro-shell__body--split {
+  flex-direction: column;
+}
+
+.pro-shell__body--split > .pro-shell__view {
+  flex: 3;
+  min-height: 0;
+}
+
+.pro-shell__expanded-panel {
+  flex: 1;
+  min-height: 120px;
+  max-height: 33vh;
+  border-top: 1px solid var(--border);
+  overflow: hidden;
+  background: rgba(5, 10, 22, 0.95);
+}
+
+.pro-shell__view {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.pro-shell__bottom {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--border);
+  background: rgba(13, 25, 48, 0.35);
+}
+
+/* ---------- 底部状态栏 ---------- */
+
+.pro-shell__stats {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.pro-shell__stats-warn {
+  color: var(--warning);
+}
+
+.pro-shell__stats-source {
+  opacity: 0.6;
+}
+
+.pro-shell__stats-attribution {
+  opacity: 0.45;
+  font-size: 11px;
+}
+
+/* ---------- 仿真时间角标（视图左下角） ---------- */
+
+.pro-shell__sim-clock {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  padding: 6px 12px;
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
+  background: rgba(13, 25, 48, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.pro-shell__sim-clock-zone {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* ---------- 视图控件（左上角工具区 / 右上角视图切换） ---------- */
+
+.pro-shell__map-tools {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.pro-shell__map-tools-stack {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 5;
+}
+
+.pro-shell__map-tools-stack .pro-shell__map-tools {
+  position: static;
+}
+
+.pro-shell__view-toggle {
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  background: rgba(13, 25, 48, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.pro-shell__view-toggle:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.pro-shell__view-toggle--active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(77, 166, 255, 0.08);
+}
+
+/* 2D/3D 切换：右上角，与左上角底图切换分开 */
+.pro-shell__view-toggle--tr {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+}
+
+.pro-shell__basemap {
+  position: relative;
+}
+
+.pro-shell__basemap-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  min-width: 140px;
+  padding: 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0d1930;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 20;
+}
+
+.pro-shell__basemap-menu--scroll {
+  max-height: 320px;
+  overflow-y: auto;
+  min-width: 240px;
+}
+
+.pro-shell__basemap-item {
+  padding: 8px 10px;
+  font-size: 12px;
+  text-align: left;
+  color: var(--text);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pro-shell__basemap-item:hover {
+  background: rgba(77, 166, 255, 0.1);
+}
+
+.pro-shell__basemap-item--active {
+  color: var(--cyan);
+}
+
+/* ---------- 左工作栏（框架；业务内容样式在各场景 css） ---------- */
+
+.pro-shell__sidebar {
+  flex: none;
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--border);
+  background: rgba(13, 25, 48, 0.35);
+  overflow-y: auto;
+}
+
+.pro-shell__sidebar-bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pro-shell__sidebar-bar--right {
+  justify-content: flex-end;
+}
+
+.pro-shell__sidebar-collapse {
+  flex: none;
+  padding: 4px 7px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pro-shell__sidebar-collapse:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+.pro-shell__rail {
+  flex: none;
+  width: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 8px;
+  border-right: 1px solid var(--border);
+  background: rgba(13, 25, 48, 0.35);
+}
+
+.pro-shell__rail-btn {
+  width: 28px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  writing-mode: vertical-lr;
+  letter-spacing: 2px;
+}
+
+.pro-shell__rail-btn:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+/* 右 Agent 面板收起细条 */
+.pro-shell__rail--right {
+  flex: none;
+  width: 32px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 8px;
+  border-left: 1px solid var(--border);
+  background: rgba(13, 25, 48, 0.35);
+}
+
+.pro-shell__rail--right button {
+  width: 28px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 0;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  writing-mode: vertical-lr;
+  letter-spacing: 2px;
+}
+
+.pro-shell__rail-btn:hover,
+.pro-shell__rail--right button:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+.pro-shell__rail--right:hover {
+  color: var(--text);
+  background: rgba(77, 166, 255, 0.08);
+}
+
+/* ---------- Agent 对话面板 ---------- */
+
+.pro-shell__agent {
+  position: relative;
+  flex: none;
+  width: 360px;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--border);
+  background: rgba(13, 25, 48, 0.35);
+}
+
+/* 左边框拖拽调节宽度 */
+
+.pro-shell__agent-resizer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -6px;
+  width: 12px;
+  cursor: col-resize;
+  z-index: 10;
+}
+
+.pro-shell__agent-resizer:hover,
+.pro-shell__agent-resizer:active {
+  background: rgba(77, 166, 255, 0.25);
+}
+
+/* 「更多」工具菜单 */
+
+.pro-shell__agent-tools-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  min-width: 240px;
+}
+
+.pro-shell__agent-header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pro-shell__agent-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.pro-shell__agent-close {
+  padding: 2px 6px;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pro-shell__agent-close:hover {
+  color: var(--text);
+  background: rgba(77, 166, 255, 0.1);
+}
+
+.pro-shell__agent-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pro-shell__agent-empty {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 8px 0;
+}
+
+.pro-shell__agent-empty-hint {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+}
+
+.pro-shell__agent-suggestions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pro-shell__agent-suggestion {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text);
+  text-align: left;
+  background: rgba(77, 166, 255, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.pro-shell__agent-suggestion:hover {
+  border-color: var(--primary);
+  background: rgba(77, 166, 255, 0.1);
+}
+
+.pro-shell__agent-chips {
+  flex: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pro-shell__agent-messages .msg__bubble {
+  max-width: 92%;
+  font-size: 13px;
+}
+
+.pro-shell__agent-error {
+  flex: none;
+  margin: 0 12px;
+  padding: 8px 12px;
+  font-size: 12px;
+  color: var(--error);
+  border: 1px solid var(--error);
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.08);
+}
+
+.pro-shell__agent-footer {
+  flex: none;
+  padding: 10px 12px 12px;
+  border-top: 1px solid var(--border);
+}
+
+/* ---------- 场景管理浮框 ---------- */
+
+.pro-shell__scene-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  /* 不阻断背景交互，点击遮罩关闭 */
+}
+
+.pro-shell__scene-modal {
+  position: fixed;
+  top: 8px;
+  left: 60px;
+  width: 360px;
+  max-height: calc(100vh - 16px);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(8, 14, 30, 0.96);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.pro-shell__scene-modal-header {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.pro-shell__scene-modal-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.pro-shell__scene-modal-close {
+  padding: 2px 6px;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pro-shell__scene-modal-close:hover {
+  color: var(--text);
+  background: rgba(77, 166, 255, 0.1);
+}
+
+.pro-shell__scene-modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pro-shell__scene-modal-create {
+  padding: 10px;
+}
+
+.pro-shell__scene-modal-hint {
+  margin: 0;
+  font-size: 13px;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.pro-shell__scene-modal-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pro-shell__scene-modal-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.pro-shell__scene-modal-item:hover {
+  border-color: var(--primary);
+  background: rgba(77, 166, 255, 0.06);
+}
+
+.pro-shell__scene-modal-item--active {
+  border-color: var(--cyan);
+}
+
+.pro-shell__scene-modal-item-check {
+  width: 14px;
+  flex: none;
+  font-size: 10px;
+  color: var(--cyan);
+}
+
+.pro-shell__scene-modal-item-name {
+  flex: 1;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pro-shell__scene-modal-item-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.pro-shell__scene-modal-item-actions {
+  display: none;
+  gap: 4px;
+}
+
+.pro-shell__scene-modal-item:hover .pro-shell__scene-modal-item-actions {
+  display: flex;
+}
+
+.pro-shell__scene-modal-item-actions button {
+  padding: 2px 6px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pro-shell__scene-modal-item-actions button:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+.pro-shell__scene-modal-edit {
+  padding: 8px 12px;
+  font-size: 14px;
+  color: var(--text);
+  background: rgba(5, 10, 22, 0.8);
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  outline: none;
+}
+
+/* ---------- 详情/参数面板 ---------- */
+
+.pro-shell__detail {
+  position: absolute;
+  bottom: 60px;
+  right: 16px;
+  width: 320px;
+  max-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: rgba(13, 25, 48, 0.96);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  overflow-y: auto;
+}
+
+.pro-shell__detail-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.pro-shell__detail-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+.pro-shell__detail-close {
+  flex: none;
+  padding: 2px 6px;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.pro-shell__detail-close:hover {
+  color: var(--text);
+  background: rgba(77, 166, 255, 0.1);
+}
+
+.pro-shell__detail-section-title {
+  margin: 12px 0 0;
+  font-size: 11px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.pro-shell__detail-grid {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 8px 12px;
+  margin: 12px 0 0;
+  font-size: 13px;
+  align-items: center;
+}
+
+.pro-shell__detail-grid dt {
+  color: var(--text-secondary);
+  text-align: right;
+  padding-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+}
+
+.pro-shell__detail-info {
+  width: 16px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 10px;
+  color: var(--text-secondary);
+  background: rgba(77, 166, 255, 0.1);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  cursor: help;
+  flex: none;
+}
+
+.pro-shell__detail-info:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+}
+
+.pro-shell__detail-grid dd {
+  margin: 0;
+  text-align: left;
+  font-variant-numeric: tabular-nums;
+}
+
+.pro-shell__detail-live {
+  margin-left: 6px;
+  padding: 0 6px;
+  font-size: 10px;
+  color: var(--cyan);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+}
+
+.pro-shell__detail-divider {
+  margin: 12px 0 0;
+  border-top: 1px dashed var(--border);
+}
+
+.pro-shell__detail-note {
+  margin: 12px 0 0;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.pro-shell__detail-actions {
+  margin-top: 12px;
+  display: flex;
+  gap: 8px;
+}
+
+/* ---------- 时间控制 ---------- */
+
+.pro-shell__time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pro-shell__time-btn {
+  min-width: 34px;
+  padding: 5px 8px;
+  font-size: 12px;
+  color: var(--text-secondary);
+  background: rgba(5, 10, 22, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.pro-shell__time-btn:not(:disabled):hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+.pro-shell__time-btn--active {
+  color: var(--primary);
+  border-color: var(--primary);
+  background: rgba(77, 166, 255, 0.1);
+}
+
+.pro-shell__time-sep {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+  margin: 0 4px;
+}
+
+.pro-shell__time-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* 右上角工具组（GNC 跟踪/遥测等按钮） */
+.pro-shell__tools-tr {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+}

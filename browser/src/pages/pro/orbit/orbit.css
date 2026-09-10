@@ -1,0 +1,625 @@
+/**
+ * 太空轨道模式样式（业务层）
+ *
+ * 布局骨架 / 侧栏框架与收起细条 / Agent 面板 / 视图控件（底图菜单、2D/3D
+ * 切换、仿真时钟角标）/ 详情面板 / 场景管理浮框 / 时间控制 / 底部状态栏
+ * 等壳样式已上提到 pro/shell/shell.css（pro-shell__ 前缀）；
+ * 本文件只保留轨道业务类（orbit- 前缀）与 R3F 视图样式。
+ */
+
+/* ---------- 鹰眼图 ---------- */
+
+.orbit-main__eagle {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+.eagle-eye {
+  position: relative;
+  display: block;
+}
+
+.eagle-eye__canvas {
+  display: block;
+  cursor: crosshair;
+}
+
+.eagle-eye__size-toggle {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  line-height: 1;
+  color: var(--text-secondary);
+  background: rgba(13, 25, 48, 0.85);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.eagle-eye__size-toggle:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+/* ---------- 3D 视图错误占位 ---------- */
+
+.orbit-main__view-error {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  color: var(--text-secondary);
+}
+
+.orbit-main__agent-toggle {
+  padding: 4px 12px;
+  font-size: 12px;
+}
+
+.orbit-main__agent-toggle--active {
+  color: var(--cyan);
+  border-color: var(--cyan);
+  background: rgba(58, 224, 216, 0.08);
+}
+
+/* ---------- 轨道模式分包加载占位 ---------- */
+
+.orbit-suspense-fallback {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* ---------- 侧边栏业务内容（框架在 shell） ---------- */
+
+.orbit-sidebar__section {
+  flex: none;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.orbit-sidebar__section--grow {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.orbit-sidebar__section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: var(--text-secondary);
+  letter-spacing: 1px;
+}
+
+.orbit-sidebar__section-tools {
+  display: flex;
+  gap: 6px;
+}
+
+.orbit-sidebar__section-tools button {
+  padding: 0;
+  font-size: 11px;
+  color: var(--primary);
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.orbit-sidebar__new {
+  width: 100%;
+}
+
+.orbit-sidebar__hint {
+  margin: 4px 0;
+  font-size: 12px;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.orbit-sidebar__scenes {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.orbit-sidebar__scene {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.orbit-sidebar__scene:hover {
+  background: rgba(77, 166, 255, 0.06);
+  color: var(--text);
+}
+
+.orbit-sidebar__scene--active {
+  background: rgba(77, 166, 255, 0.12);
+  color: var(--text);
+}
+
+.orbit-sidebar__scene-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orbit-sidebar__scene-actions {
+  display: none;
+  gap: 4px;
+}
+
+.orbit-sidebar__scene:hover .orbit-sidebar__scene-actions {
+  display: flex;
+}
+
+.orbit-sidebar__scene-actions button {
+  padding: 1px 5px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: rgba(13, 25, 48, 0.9);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.orbit-sidebar__scene-actions button:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+.orbit-sidebar__scene-edit {
+  padding: 6px 10px;
+  font-size: 13px;
+  color: var(--text);
+  background: rgba(5, 10, 22, 0.8);
+  border: 1px solid var(--primary);
+  border-radius: 8px;
+  outline: none;
+}
+
+/* 分组 */
+
+.orbit-sidebar__groups {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.orbit-group-item {
+  border-radius: 6px;
+}
+
+.orbit-group-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.orbit-group-check {
+  display: flex;
+  align-items: center;
+  padding: 0 2px;
+  cursor: pointer;
+}
+
+.orbit-group-check input[type='checkbox'] {
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.orbit-group-name {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 6px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--text);
+  background: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s;
+}
+
+.orbit-group-name:hover {
+  background: rgba(77, 166, 255, 0.06);
+}
+
+.orbit-group-name--expanded {
+  background: rgba(77, 166, 255, 0.04);
+}
+
+.orbit-group__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.orbit-group__label {
+  flex: 1;
+}
+
+.orbit-group__count {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+.orbit-group__arrow {
+  font-size: 10px;
+  color: var(--text-secondary);
+  flex: none;
+  width: 12px;
+  text-align: center;
+}
+
+/* 展开的卫星列表 */
+
+.orbit-group-sats {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding: 2px 0 4px 24px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.orbit-group-sat {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+  padding: 4px 8px;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.orbit-group-sat:hover {
+  background: rgba(77, 166, 255, 0.08);
+  color: var(--text);
+}
+
+.orbit-group-sat__name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orbit-group-sat__id {
+  flex: none;
+  font-size: 10px;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+/* ---------- 分组卫星悬浮面板 ---------- */
+
+.orbit-floating-panel {
+  position: absolute;
+  top: 8px;
+  left: 248px;
+  width: 420px;
+  max-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+  background: rgba(8, 14, 30, 0.96);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+  overflow: hidden;
+}
+
+.orbit-floating-panel__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+  flex: none;
+}
+
+.orbit-floating-panel__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.orbit-floating-panel__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.orbit-floating-panel__count {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.orbit-floating-panel__close {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.orbit-floating-panel__close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+}
+
+/* 表头 */
+
+.orbit-floating-panel__thead {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--border);
+  flex: none;
+}
+
+.orbit-floating-panel__th {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* 数据行 */
+
+.orbit-floating-panel__list {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.orbit-floating-panel__sat {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  padding: 6px 14px;
+  background: none;
+  border: none;
+  border-bottom: 1px solid rgba(96, 140, 210, 0.06);
+  color: var(--text);
+  font-size: 12px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.orbit-floating-panel__sat:hover {
+  background: rgba(77, 166, 255, 0.08);
+}
+
+/* 列宽分配：名称 / NORAD / 国际标识 / 类型 */
+
+.orbit-floating-panel__th--name,
+.orbit-floating-panel__td--name {
+  flex: 1.4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 6px;
+}
+
+.orbit-floating-panel__th--id,
+.orbit-floating-panel__td--id {
+  flex: 0.7;
+  padding-right: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+.orbit-floating-panel__th--intl,
+.orbit-floating-panel__td--intl {
+  flex: 0.9;
+  padding-right: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orbit-floating-panel__th--type,
+.orbit-floating-panel__td--type {
+  flex: 0.6;
+  text-align: right;
+}
+
+.orbit-floating-panel__td {
+  color: var(--text);
+}
+
+.orbit-floating-panel__td--id {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.orbit-floating-panel__td--intl {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+.orbit-floating-panel__td--type {
+  color: var(--text-secondary);
+  font-size: 11px;
+}
+
+/* 搜索 */
+
+.orbit-sidebar__search {
+  padding: 7px 10px;
+  font-size: 13px;
+  color: var(--text);
+  background: rgba(5, 10, 22, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+}
+
+.orbit-sidebar__search:focus {
+  border-color: var(--primary);
+}
+
+.orbit-sidebar__results {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.orbit-sidebar__result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 7px 10px;
+  background: none;
+  border: none;
+  border-radius: 8px;
+  color: var(--text);
+  font-size: 13px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.orbit-sidebar__result:hover {
+  background: rgba(77, 166, 255, 0.08);
+}
+
+.orbit-sidebar__result-name {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.orbit-sidebar__result-id {
+  flex: none;
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* ---------- R3F 自研 3D 视图 ---------- */
+
+.orbit-r3f-view {
+  position: absolute;
+  inset: 0;
+}
+
+.orbit-r3f-view canvas {
+  display: block;
+}
+
+.orbit-r3f-view__loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+  background: var(--bg);
+}
+
+/* 选中目标名称标签（drei Html，观感沿用已下线 Cesium 引擎的 13px 填充+描边标签） */
+.orbit-r3f-label {
+  font-size: 13px;
+  color: var(--text);
+  white-space: nowrap;
+  text-shadow:
+    0 0 3px rgba(0, 0, 0, 0.9),
+    0 1px 2px rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, -170%);
+  transition: opacity 0.2s;
+}
+
+/* 高亮选中 checkbox 列 */
+.orbit-floating-panel__th--check {
+  width: 28px;
+  flex: none;
+}
+
+.orbit-floating-panel__check {
+  width: 14px;
+  height: 14px;
+  flex: none;
+  margin: 0 6px 0 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+.orbit-floating-panel__sat {
+  display: flex;
+  align-items: center;
+}
+
+.orbit-floating-panel__sat--highlighted {
+  background: rgba(77, 166, 255, 0.08);
+}
+
+.orbit-floating-panel__sat--dimmed {
+  opacity: 0.3;
+}
+
+.orbit-floating-panel__sat--dimmed:hover {
+  opacity: 0.7;
+}
+
+.orbit-floating-panel__sat-btn {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}

@@ -1,0 +1,78 @@
+/**
+ * 专业模式布局样式（模式导航轨）
+ */
+
+.pro-layout {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}
+
+.pro-rail {
+  flex: none;
+  width: 64px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 6px;
+  border-right: 1px solid var(--border);
+  background: rgba(13, 25, 48, 0.5);
+}
+
+.pro-rail__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  padding: 8px 2px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pro-rail__item:hover {
+  background: rgba(77, 166, 255, 0.08);
+  color: var(--text);
+}
+
+.pro-rail__item--active {
+  background: rgba(77, 166, 255, 0.14);
+  color: var(--text);
+}
+
+.pro-rail__item--disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.pro-rail__item--soon {
+  margin-top: 8px;
+  padding-top: 8px;
+  border: none;
+  border-top: 1px dashed var(--border);
+  border-radius: 0 0 10px 10px;
+  background: none;
+  font-size: 12px;
+}
+
+.pro-rail__item--soon-open {
+  color: var(--text);
+}
+
+.pro-rail__icon {
+  font-size: 18px;
+  line-height: 1;
+}
+
+.pro-rail__label {
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.pro-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+}

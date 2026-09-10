@@ -1,0 +1,146 @@
+/**
+ * 客户端下载页样式（工具侧产品层：紧凑面板化，不做营销页大动画）
+ */
+
+.download-page {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 32px 24px 48px;
+}
+
+.download-header,
+.download-tabs,
+.download-state,
+.download-list {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.download-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.download-subtitle {
+  margin: 8px 0 0;
+  font-size: 14px;
+  color: var(--text-secondary);
+}
+
+/* ---------- 应用分段切换 ---------- */
+
+.download-tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.download-tab {
+  padding: 8px 18px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.download-tab:hover {
+  color: var(--text);
+}
+
+.download-tab--active {
+  border-color: var(--primary);
+  background: rgba(77, 166, 255, 0.12);
+  color: var(--text);
+}
+
+/* ---------- 状态提示（加载/空/错误） ---------- */
+
+.download-state {
+  margin-top: 48px;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+.download-state--error p {
+  margin: 0 0 16px;
+  color: var(--error);
+}
+
+/* ---------- 版本卡片 ---------- */
+
+.download-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.release-card {
+  padding: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.release-card__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.release-card__version {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.release-card__latest {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: rgba(34, 197, 94, 0.15);
+  color: var(--success);
+  font-size: 12px;
+}
+
+.release-card__date {
+  margin-left: auto;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.release-card__notes {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+}
+
+.release-card__downloads {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.release-card__download {
+  text-decoration: none;
+  color: var(--text);
+}
+
+.release-card__download:hover {
+  color: var(--text);
+}
+
+.release-card__size {
+  font-size: 12px;
+  color: var(--text-secondary);
+}

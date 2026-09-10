@@ -1,0 +1,9 @@
+{
+  "encrypt": false,
+  "description": "知识库打包配置",
+  "options": {
+    "encrypt": "是否加密知识库 (true=加密, false=明文)",
+    "outputDir": "输出目录 (默认: dist/knowledge)",
+    "sourceDir": "源目录 (默认: knowledge)"
+  }
+}

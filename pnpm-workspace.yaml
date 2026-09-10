@@ -1,0 +1,8 @@
+packages:
+  - shared/*
+  - cli
+  - desktop
+  - browser
+allowBuilds:
+  '@react-spring/core': false
+  esbuild: true

@@ -1,0 +1,8 @@
+[test]
+root = "./"
+timeout = 30000
+retry = 1
+
+[test.preload]
+# Preload stubs for testing
+preload = ["../src/stubs/bun-bundle-preload.ts"]

@@ -1,0 +1,40 @@
+{
+  "name": "@aoe/browser",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AOE Code 浏览器版客户端",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aoe/agent": "workspace:*",
+    "@aoe/core": "workspace:*",
+    "@aoe/types": "workspace:*",
+    "@aoe/ui": "workspace:*",
+    "@gnc/core": "workspace:*",
+    "@gnc/scenarios": "workspace:*",
+    "@react-three/drei": "9.121.5",
+    "@react-three/fiber": "8.17.10",
+    "marked": "^17.0.6",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.20.0",
+    "satellite.js": "5.0.0",
+    "three": "0.169.0",
+    "topojson-client": "^3.1.0",
+    "xss": "^1.0.15"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "@types/three": "0.169.0",
+    "@types/topojson-client": "^3.1.5",
+    "@vitejs/plugin-react": "^4.2.0",
+    "typescript": "^5.4.0",
+    "vite": "^5.0.0"
+  }
+}

@@ -1,0 +1,84 @@
+# ────────────────────────────────────────────────────────────
+# AOE Code Web Nginx 配置模板
+# ────────────────────────────────────────────────────────────
+# 使用方法：
+#   1. 复制本文件为 nginx.conf
+#   2. 替换以下占位符为实际值：
+#      - YOUR_DOMAIN        → 你的域名（如 app.aoecode.cn）
+#      - YOUR_SERVER_PATH   → 服务器上的项目路径
+#      - YOUR_API_BACKEND   → 后端 API 地址（默认 http://127.0.0.1:8080）
+#      - YOUR_TLE_SOURCE    → TLE 数据源地址（如 https://ssa.aseem.cn）
+#      - YOUR_SSL_CERT      → SSL 证书路径
+#      - YOUR_SSL_KEY       → SSL 私钥路径
+#   3. 将 dist/ 目录上传到服务器
+#   4. nginx -t && systemctl reload nginx
+# ────────────────────────────────────────────────────────────
+
+server {
+    listen 80;
+    server_name YOUR_DOMAIN;
+
+    # ── SSL（取消注释并配置证书路径） ──
+    # listen 443 ssl;
+    # ssl_certificate     YOUR_SSL_CERT;
+    # ssl_certificate_key YOUR_SSL_KEY;
+    # return 301 https://$host$request_uri;
+
+    root YOUR_SERVER_PATH/dist;
+    index index.html;
+
+    # ── 安全头 ──
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+
+    # ── gzip 压缩 ──
+    gzip on;
+    gzip_types text/plain text/css application/json application/javascript text/xml application/xml image/svg+xml;
+    gzip_min_length 1024;
+
+    # ── 静态资源（构建产物带 hash，长缓存） ──
+    location /assets/ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+    }
+
+    # ── 本地瓦片底图（earth/basemap/textures，不会变） ──
+    location ~ ^/(earth|basemap|textures|img)/ {
+        expires 30d;
+        add_header Cache-Control "public";
+    }
+
+    # ── 后端 API 反代 ──
+    # 前端请求 /api/v1/*，转发到后端
+    location /api/ {
+        proxy_pass YOUR_API_BACKEND/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        # SSE 流式输出需要关闭缓冲
+        proxy_buffering off;
+        proxy_cache off;
+        proxy_read_timeout 300s;
+    }
+
+    # ── TLE 数据反代（可选，用于解决 CORS 问题） ──
+    # 前端请求 /tle-proxy/TLE.json → 转发到 TLE 数据源
+    location /tle-proxy/ {
+        proxy_pass YOUR_TLE_SOURCE/;
+        proxy_set_header Host YOUR_TLE_SOURCE_HOST;
+        proxy_ssl_server_name on;
+        proxy_read_timeout 120s;
+        proxy_cache_valid 200 1h;
+    }
+
+    # ── SPA 路由回退 ──
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # ── 禁止访问隐藏文件 ──
+    location ~ /\. {
+        deny all;
+    }
+}

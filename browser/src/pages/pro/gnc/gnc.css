@@ -1,0 +1,360 @@
+/**
+ * 发射模拟场景样式（GNC 业务类）
+ *
+ * 布局骨架 / Agent 面板 / 时间控制 / 遥测面板（DetailPanel）等壳样式由
+ * pro/shell/shell.css 统一提供（pro-shell__ 前缀，S3 迁移）；本文件只保留
+ * GNC 业务类：2D 轨迹角窗、R3F 视图错误横幅（Cesium 视图已于 S4 下线）。
+ */
+
+/* ---------- 2D 高度-射程曲线角窗（视图左下角浮层） ---------- */
+
+.launch-stage__curve {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  width: 360px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: box-shadow 0.2s;
+}
+
+.launch-stage__curve:hover {
+  box-shadow: 0 4px 20px rgba(77, 166, 255, 0.3);
+}
+
+.launch-stage__curve-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 12px;
+  background: rgba(8, 14, 30, 0.9);
+  border-bottom: 1px solid var(--border);
+}
+
+.launch-stage__curve-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.launch-stage__curve-hint {
+  font-size: 10px;
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+/* 展开后的图表（底部分屏） */
+.launch-chart-bottom {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 180px;
+  border-top: 1px solid var(--border);
+  background: rgba(8, 14, 30, 0.95);
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+}
+
+.launch-chart-bottom .launch-trajectory {
+  flex: 1;
+  width: 100%;
+  min-height: 0;
+}
+
+.launch-chart-overlay__close {
+  padding: 2px 8px;
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.launch-chart-overlay__close:hover {
+  color: var(--text);
+  border-color: var(--primary);
+}
+
+/* 入轨成功提示 */
+.launch-orbit-toast {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 12px 28px;
+  background: rgba(34, 197, 94, 0.15);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  border-radius: 12px;
+  backdrop-filter: blur(8px);
+  color: #22c55e;
+  font-size: 16px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+  z-index: 20;
+  animation: orbit-toast-in 0.5s ease-out;
+}
+
+.launch-orbit-toast__icon {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(34, 197, 94, 0.25);
+  border-radius: 50%;
+  font-size: 18px;
+}
+
+@keyframes orbit-toast-in {
+  from { opacity: 0; transform: translate(-50%, -50%) scale(0.8); }
+  to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* 发射目标文字标签 */
+.gnc-craft-label {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2px 8px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #3ae0d8;
+  white-space: nowrap;
+  text-shadow: 0 0 6px rgba(58, 224, 216, 0.6), 0 0 3px rgba(0, 0, 0, 0.9);
+  transform: translateY(-14px);
+  letter-spacing: 1px;
+}
+
+.gnc-craft-arrow {
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 6px solid #3ae0d8;
+  margin-top: 1px;
+  filter: drop-shadow(0 0 3px rgba(58, 224, 216, 0.6));
+}
+
+.launch-stage__curve .launch-trajectory {
+  display: block;
+  width: 100%;
+  border: none;
+  border-radius: 0;
+}
+
+.launch-trajectory {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+
+/* R3F 地球纹理加载失败横幅（视图顶部浮层） */
+.gnc-r3f__error {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 6px 12px;
+  font-size: 12px;
+  color: var(--error);
+  border: 1px solid var(--error);
+  border-radius: 8px;
+  background: rgba(13, 25, 48, 0.85);
+}
+
+/* 发射场标记标签（SiteMarker；遮挡显隐由组件每帧写 opacity） */
+.gnc-r3f__site-label {
+  font-size: 12px;
+  color: #ffa94d;
+  white-space: nowrap;
+  text-shadow:
+    0 0 3px rgba(0, 0, 0, 0.9),
+    0 1px 2px rgba(0, 0, 0, 0.9);
+  transform: translate(-50%, 20px);
+  transition: opacity 0.2s;
+}
+
+/* 发射场两级选择器（SiteMenu，左上角） */
+.gnc-site-menu {
+  position: relative;
+}
+
+.gnc-site-menu__panel {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  display: flex;
+  padding: 4px;
+  gap: 2px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #0d1930;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  z-index: 20;
+  max-height: 340px;
+}
+
+.gnc-site-menu__countries {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 84px;
+  overflow-y: auto;
+  border-right: 1px solid var(--border);
+  padding-right: 4px;
+}
+
+.gnc-site-menu__sites {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 260px;
+  overflow-y: auto;
+}
+
+.gnc-site-menu__item {
+  padding: 8px 10px;
+  font-size: 12px;
+  text-align: left;
+  color: var(--text);
+  background: none;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.gnc-site-menu__item:hover {
+  background: rgba(77, 166, 255, 0.1);
+}
+
+.gnc-site-menu__item--active {
+  background: rgba(77, 166, 255, 0.18);
+  color: var(--primary);
+}
+
+/* 目标轨道编辑（设定面板内输入） */
+.gnc-target-edit {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.gnc-target-edit input[type="number"] {
+  flex: 1;
+  min-width: 0;
+  padding: 6px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  color: var(--text);
+  background: rgba(5, 10, 22, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.gnc-target-edit input[type="number"]:focus {
+  border-color: var(--primary);
+}
+
+.gnc-target-edit span {
+  font-size: 13px;
+  color: var(--text-secondary);
+  flex: none;
+  white-space: nowrap;
+}
+
+.gnc-target-edit button {
+  padding: 6px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  flex: none;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+
+.gnc-target-edit button:hover {
+  opacity: 0.85;
+}
+
+/* 模式切换按钮（标题栏内） */
+.gnc-mode-toggle {
+  padding: 3px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--primary);
+  background: rgba(77, 166, 255, 0.1);
+  border: 1px solid rgba(77, 166, 255, 0.3);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.gnc-mode-toggle:hover {
+  background: rgba(77, 166, 255, 0.2);
+  border-color: var(--primary);
+}
+
+/* 轨道预设下拉框 */
+.gnc-orbit-select {
+  width: 100%;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-family: inherit;
+  color: var(--text);
+  background: rgba(5, 10, 22, 0.8);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.gnc-orbit-select:focus {
+  border-color: var(--primary);
+}
+
+.gnc-orbit-select option {
+  background: #0d1930;
+  color: var(--text);
+}
+
+/* 轨道预设按钮 */
+.gnc-orbit-preset-btn {
+  padding: 4px 10px;
+  font-size: 12px;
+  color: var(--text);
+  background: rgba(77, 166, 255, 0.08);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+}
+
+.gnc-orbit-preset-btn:hover {
+  background: rgba(77, 166, 255, 0.18);
+  border-color: var(--primary);
+  color: var(--primary);
+}

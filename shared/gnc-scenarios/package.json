@@ -1,0 +1,13 @@
+{
+  "name": "@gnc/scenarios",
+  "version": "0.1.0",
+  "private": true,
+  "description": "GNC 任务/飞行器场景数据（vendored from gnc-space-sim, MIT License）",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "dependencies": {
+    "@gnc/core": "workspace:*"
+  }
+}
