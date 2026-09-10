@@ -32,7 +32,7 @@ TypeScript 类型定义，包括用户、Agent、API 响应等类型。
 Agent 核心逻辑，实现对话引擎、工具调用、上下文管理等功能。
 
 ### @gnc/core
-GNC（制导、导航与控制）仿真算法库，vendored 自 gnc-space-sim（MIT 许可）。
+GNC（制导、导航与控制）仿真算法库，vendored 自 gnc-space-sim。
 
 ### @gnc/scenarios
 任务和载具数据，依赖 @gnc/core。
